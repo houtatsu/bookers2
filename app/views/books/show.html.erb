@@ -14,11 +14,15 @@
         </tr>
       </table>
       <div class="row">
-        <% if @user == current_user %>
-          <p><%= link_to "プロフィール編集", edit_user_path(@user), class:"btn btn-outline-secondary btn-block" %></p>
-        <% end %>
+
+          <p>
+            <%= link_to edit_user_path(@user), class:"btn btn-outline-secondary btn-block" do %>
+               <i class="fas fa-user-cog"></i>
+            <% end %>
+          </p>
+
       </div>
-      <h2>New Book</h2>
+      <h2>New book</h2>
       <%= form_with model: @book do |f| %>
         <div class="form-group">
           <label class="book_title">Title</label><br>
@@ -39,7 +43,7 @@
         <table class="table">
           <tr>
             <td>
-              <%= image_tag 'no_image.jpg' %><br>
+              <%= image_tag @books.user.get_profile_image(100,100) %><br>
               <%= link_to @books.user.name, user_path(@books.user.id) %>
             </td>
             <td><%= link_to @books.title %></td>

@@ -1,3 +1,11 @@
+<% if @book.errors.any? %>
+  <h3><%= @book.errors.count %> errors prohibited this obj from being saved: </h3>
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
 <div class="container px-5 px-sm-0">
   <div class="row">
     <div class="col-md-3">
@@ -14,11 +22,15 @@
         </tr>
       </table>
       <div class="row">
-        <% if @user == current_user %>
-          <p><%= link_to "プロフィール編集", edit_user_path(@user), class:"btn btn-outline-secondary btn-block" %></p>
-        <% end %>
+
+          <p>
+            <%= link_to edit_user_path(@user), class:"btn btn-outline-secondary btn-block" do %>
+               <i class="fas fa-user-cog"></i>
+            <% end %>
+          </p>
+
       </div>
-      <h2>New Book</h2>
+      <h2>New book</h2>
       <%= form_with model: @book do |f| %>
         <div class="form-group">
           <label class="book_title">Title</label><br>
@@ -47,7 +59,11 @@
           <tbody>
           <% @books.each do |book| %>
             <tr>
-              <td><%= image_tag book.user.get_profile_image(100,100) %></td>
+              <td>
+                <%= link_to user_path(book.user.id) do %>
+                  <%= image_tag book.user.get_profile_image(100,100) %>
+                <% end %>
+              </td>
               <td><%= link_to book.title, book_path(book.id) %></td>
               <td><%= book.body %></td>
             </tr>
